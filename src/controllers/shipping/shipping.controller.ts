@@ -30,6 +30,7 @@ export const shipping = async (request: Request, response: Response) => {
             recipient_name: customer[0].firstname + customer[0].lastname,
             recipient_add1: address[0].address1,
             recipient_add2: address[0].address2,
+            
             recipient_city: address[0].city,
             recipient_state: address[0].city,
             recipient_cp: '00001',
@@ -43,7 +44,8 @@ export const shipping = async (request: Request, response: Response) => {
             package_weight_unit: 'Lb',
             recipient_country: 'DO'
         }).then((result) => {
-            if (result.data.error) return response.status(400).json({ error: { mensage: result.data.error } })
+            console.log(result.data.error);
+            if (result.data.error) return response.json({ error: { message: result.data.error } })
            
             response.status(200).json({
                 createOrdern: true

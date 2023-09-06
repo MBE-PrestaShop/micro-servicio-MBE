@@ -5,10 +5,15 @@ import express, { Application } from "express"
 import config from "../config"
 import cors from 'cors';
 import shippingRouter from '../routes/shipping/shipping.routes';
+import { Server as WebSocketServer } from "socket.io";
+import http from "http";
+import { Socket } from "./socket"
+
 
 class Server {
     private app: Application;
     private port: string;
+    private server:any;
     private apiPaths = {
         shipping: '/api/shipping',
        
@@ -16,6 +21,7 @@ class Server {
 
     constructor() {
         this.app = express();
+        this.server = http.createServer(this.app);
         this.port = config.port || "8000"
 
         this.middlewares();
@@ -24,12 +30,7 @@ class Server {
     }
 
     middlewares() {
-        this.app.use(cors({
-            origin: (_, next) => {
-                next(null, true);
-            },
-            credentials: true,
-        }))
+        this.app.use(cors())
 
         this.app.use(express.json())
     }
@@ -40,9 +41,16 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, () => {
+        const io = new WebSocketServer(this.server,{
+            cookie: true,
+            cors: { origin: "*" }
+        });
+
+        this.server.listen(this.port, () => {
             console.log(`🚀 Server ON: http://localhost:${this.port}`);
+            Socket(io);
         })
+
     }
 }
 
