@@ -11,7 +11,7 @@ export const Socket = async (io: any) => {
             setTimeout(async () => {
                 const status = await statusService()
                 const cambioEnBaseDeDatos = { propiedad: status };
-                socket.emit('cambio_de_dato', cambioEnBaseDeDatos);
+                socket.emit('server:status', cambioEnBaseDeDatos);
 
             }, 5000);
         }
@@ -21,7 +21,6 @@ export const Socket = async (io: any) => {
         console.log("🚀 ~ file: socket.ts:6 ~ io.on ~ socket:", socket.id)
         const test = async () => {
             const [tokenMBE]: any = await pool.query(`select * from ps_mbe_shipping_token`);
-            // console.log("🚀 ~ file: socket.ts:11 ~ socket.emit ~ tokenMBE:", tokenMBE)
             socket.emit("server:order", tokenMBE)
 
         }

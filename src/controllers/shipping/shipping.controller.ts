@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { pool } from "../../db/mysql"
-
 import { processorProvider } from "../../provider/shipping/newOders"
 
 export const shipping = async (request: Request, response: Response) => {
