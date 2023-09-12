@@ -1,6 +1,6 @@
 
 // import { pool } from "../db/mysql"
-// import { statusService } from "../service/statusShipping.services"
+import { statusService } from "../service/statusShipping.services"
 
 export const Socket = async (io: any) => {
 
@@ -9,7 +9,7 @@ export const Socket = async (io: any) => {
 
         const status = async () => {
             setTimeout(async () => {
-                // const status = await statusService()
+                //  const status = await statusService()
                 const cambioEnBaseDeDatos = { propiedad: status };
                 socket.emit('server:status', cambioEnBaseDeDatos);
 

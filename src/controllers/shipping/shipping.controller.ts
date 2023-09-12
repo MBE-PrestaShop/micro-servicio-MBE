@@ -11,14 +11,14 @@ export const shipping = async (request: IRequest, response: Response) => {
         if (!tokenMBE) return response.json({ error: "token not fount" })
         
       
-        const [order]: any = await pool.query(`select * from ${DB_PREFIX}orders where id_order = ?`, [idOrder]);
+        const [order] = await pool.query(`select * from ${DB_PREFIX}orders where id_order = ?`, [idOrder]);
         if (!order) return response.json({ error: "order not fount" })
    
        
-        const [customer]: any = await pool.query(`select * from ${DB_PREFIX}customer where id_customer = ?`, [order[0].id_customer]);
+        const [customer] = await pool.query(`select * from ${DB_PREFIX}customer where id_customer = ?`, [order[0].id_customer]);
         if (!customer) return response.json({ error: "customer not fount" })
 
-        const [address]: any = await pool.query(`select * from ${DB_PREFIX}address where id_customer = ?`, [order[0].id_customer]);
+        const [address] = await pool.query(`select * from ${DB_PREFIX}address where id_customer = ?`, [order[0].id_customer]);
         if (!address) return response.json({ error: "customer not fount" })
 
         processorProvider.createOrders({
