@@ -12,6 +12,7 @@ class ProcessorProvider extends Provider {
     }
 
     async createOrders(data: any) {
+      
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
@@ -19,7 +20,6 @@ class ProcessorProvider extends Provider {
             }
         }
         
-        console.log("🚀 ~ file: newOders.ts:16 ~ ProcessorProvider ~ createOrders ~ formData:", formData)
         return await this.post(`${config.mbeShippingUrl}`, formData, {
             headers: {     
                 'Content-Type': 'multipart/form-data',

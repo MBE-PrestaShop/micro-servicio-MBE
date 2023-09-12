@@ -7,12 +7,13 @@ export const shipping = async (request: IRequest, response: Response) => {
         const { idOrder, DB_PREFIX } = request.body;
         const pool = request.pool
 
-        const tokenMBE = await pool.query(`select * from ${DB_PREFIX}mbe_shipping_token`);
+        const [tokenMBE] = await pool.query(`select * from ${DB_PREFIX}mbe_shipping_token`);
         if (!tokenMBE) return response.json({ error: "token not fount" })
+        
       
         const [order]: any = await pool.query(`select * from ${DB_PREFIX}orders where id_order = ?`, [idOrder]);
         if (!order) return response.json({ error: "order not fount" })
-        console.log("🚀 ~ file: shipping.controller.ts:15 ~ shipping ~ order:", order[0])
+   
        
         const [customer]: any = await pool.query(`select * from ${DB_PREFIX}customer where id_customer = ?`, [order[0].id_customer]);
         if (!customer) return response.json({ error: "customer not fount" })
