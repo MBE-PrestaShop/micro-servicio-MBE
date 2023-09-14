@@ -12,7 +12,7 @@ package-lock.json
 .pnp.js
 # .env.local
 # testing
-/.env
+#/.env
 # next.js
 /.next/
 /out/
@@ -30,4 +30,4 @@ yarn-debug.log*
 yarn-error.log*
 
 tsconfig.tsbuildinfo
-.env
+#.env
