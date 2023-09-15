@@ -1,8 +1,8 @@
 {
-  "name": "mbe-service-backend-v3",
+  "name": "micro-service-mbe",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon",
     "start": "node ./build/app.js",
