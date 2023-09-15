@@ -5,8 +5,7 @@ import { processorProvider } from "../../provider/shipping/newOders"
 export const shipping = async (request: IRequest, response: Response) => {
     try {
         const { idOrder, DB_PREFIX } = request.body;
-        console.log("🚀 ~ file: shipping.controller.ts:8 ~ shipping ~ DB_PREFIX:", DB_PREFIX)
-        console.log("🚀 ~ file: shipping.controller.ts:8 ~ shipping ~ idOrder:", idOrder)
+        
         const pool = request.pool
 
         const [tokenMBE] = await pool.query(`select * from ${DB_PREFIX}mbe_shipping_token`);

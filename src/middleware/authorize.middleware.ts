@@ -5,11 +5,7 @@ import MySQLConnectionFactory from "../db/mysql";
 export const authorizeMiddleware = async (request: IRequest, response: Response, next: NextFunction) => {
     try {
         const { DB_SERVER, DB_NAME, DB_USER, DB_PASSWD } = request.body
-        console.log("🚀 ~ file: authorize.middleware.ts:8 ~ authorizeMiddleware ~ DB_PASSWD:", DB_PASSWD)
-        console.log("🚀 ~ file: authorize.middleware.ts:8 ~ authorizeMiddleware ~ DB_USER:", DB_USER)
-        console.log("🚀 ~ file: authorize.middleware.ts:8 ~ authorizeMiddleware ~ DB_NAME:", DB_NAME)
-        console.log("🚀 ~ file: authorize.middleware.ts:8 ~ authorizeMiddleware ~ DB_SERVER:", DB_SERVER)
-     
+       
         const mysqlFactory = new MySQLConnectionFactory();
 
         const pool = await mysqlFactory.createConnection({

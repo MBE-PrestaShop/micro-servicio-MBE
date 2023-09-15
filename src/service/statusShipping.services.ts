@@ -13,7 +13,7 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
         if (!orders) return { error: { message: "orders not fount" } }
 
         const referencias = orders.map((item: any) => item.reference);
-        console.log(referencias);
+       
 
         processorProvider.statusOrders({
             token: tokenMBE[0].token_shipping,
