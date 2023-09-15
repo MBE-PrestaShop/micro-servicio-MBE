@@ -5,17 +5,17 @@ import { processorProvider } from "../../provider/shipping/newOders"
 export const shipping = async (request: IRequest, response: Response) => {
     try {
         const { idOrder, DB_PREFIX } = request.body;
-        
+
         const pool = request.pool
 
         const [tokenMBE] = await pool.query(`select * from ${DB_PREFIX}mbe_shipping_token`);
         if (!tokenMBE) return response.json({ error: "token not fount" })
-        
-      
+
+
         const [order] = await pool.query(`select * from ${DB_PREFIX}orders where id_order = ?`, [idOrder]);
         if (!order) return response.json({ error: "order not fount" })
-   
-       
+
+
         const [customer] = await pool.query(`select * from ${DB_PREFIX}customer where id_customer = ?`, [order[0].id_customer]);
         if (!customer) return response.json({ error: "customer not fount" })
 
@@ -33,11 +33,11 @@ export const shipping = async (request: IRequest, response: Response) => {
             recipient_name: customer[0].firstname + customer[0].lastname,
             recipient_add1: address[0].address1,
             recipient_add2: address[0].address2,
-            
+
             recipient_city: address[0].city,
             recipient_state: address[0].city,
             recipient_cp: '00001',
-            recipient_phone: address[0].phone,
+            recipient_phone: address[0].phone != "" ? address[0].phone : address[0].phone_mobile,
             recipient_email: customer[0].email,
             package_weight: 1,
             package_length: '1',
@@ -49,7 +49,7 @@ export const shipping = async (request: IRequest, response: Response) => {
         }).then((result) => {
             console.log(result.data.error);
             if (result.data.error) return response.json({ error: { message: result.data.error } })
-           
+
             response.status(200).json({
                 createOrdern: true
             })
