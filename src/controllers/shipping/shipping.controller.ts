@@ -22,8 +22,7 @@ export const shipping = async (request: IRequest, response: Response) => {
 
         const [address] = await pool.query(`select * from ${DB_PREFIX}address where id_customer = ?`, [order[0].id_customer]);
         if (!address) return response.json({ error: "customer not fount" })
-        console.log("🚀 ~ file: shipping.controller.ts:43 ~ shipping ~ address[0].phone :", address[0].phone)
-        console.log("🚀 ~ file: shipping.controller.ts:44 ~ shipping ~ address[0].phone_mobile:", address[0].phone_mobile)
+        
 
         processorProvider.createOrders({
             token: tokenMBE[0].token_shipping,
