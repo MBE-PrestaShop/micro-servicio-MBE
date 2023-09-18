@@ -5,7 +5,7 @@ import { processorProvider } from "../../provider/shipping/newOders"
 export const shipping = async (request: IRequest, response: Response) => {
     try {
         const { idOrder, DB_PREFIX } = request.body;
-        
+
 
         const pool = request.pool
 
@@ -22,7 +22,7 @@ export const shipping = async (request: IRequest, response: Response) => {
 
         const [address] = await pool.query(`select * from ${DB_PREFIX}address where id_customer = ?`, [order[0].id_customer]);
         if (!address) return response.json({ error: "customer not fount" })
-        
+
 
         processorProvider.createOrders({
             token: tokenMBE[0].token_shipping,
@@ -48,10 +48,11 @@ export const shipping = async (request: IRequest, response: Response) => {
             package_dim_unit: 'in',
             package_weight_unit: 'Lb',
             recipient_country: 'DO'
-        }).then((result) => {
+        }).then(async (result) => {
             console.log(result.data.error);
             if (result.data.error) return response.json({ error: { message: result.data.error } })
 
+           
             response.status(200).json({
                 createOrdern: true
             })

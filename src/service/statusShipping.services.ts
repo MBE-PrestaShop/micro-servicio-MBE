@@ -21,11 +21,18 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
             numbers: referencias
         }).then((result) => {
             result.data.map(async (data: any) => {
-
+              
                 if (data.status === "CREATED") {
                     const stateId = 2
                     const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
                     if (!orders) return { error: { message: "token not fount" } }
+                   
+                    const [getorders]: any = await pool.query(`select * from ${DB_PREFIX}orders where reference = ?`,[data.number]);
+                    if (!getorders) return { error: { message: "getorders not fount" } }
+                    
+                    const [ordersCarrier]: any = await pool.query(`UPDATE ${DB_PREFIX}order_carrier SET tracking_number = ?  WHERE id_order = ?`, [data.tracking,getorders[0].id_order]);
+                    if (!ordersCarrier) return { error: { message: "token not fount" } }
+        
                 }
 
                 if (data.status === "TRANSIT") {
@@ -42,6 +49,7 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
 
 
             })
+            
            
         }).catch((error) => {
             console.log("🚀 ~ file: orderStatus.controller.ts:49 ~ orderStatus ~ error:", error)

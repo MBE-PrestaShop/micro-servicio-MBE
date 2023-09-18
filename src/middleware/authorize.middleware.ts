@@ -6,6 +6,7 @@ export const authorizeMiddleware = async (request: IRequest, response: Response,
     try {
         const { DB_SERVER, DB_NAME, DB_USER, DB_PASSWD } = request.body
        
+       
         const mysqlFactory = new MySQLConnectionFactory();
 
         const pool = await mysqlFactory.createConnection({
