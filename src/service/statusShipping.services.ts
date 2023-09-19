@@ -33,13 +33,6 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                       );
                       if (!orders) return { error: { message: "token not found" } }
 
-                    //   const [result]:any = await pool.query(`
-                    //   SELECT *
-                    //   FROM ${DB_PREFIX}order_carrier AS oc
-                    //   INNER JOIN ${DB_PREFIX}orders AS o
-                    //   ON oc.id_order = o.id_order
-                    //   WHERE o.reference = ?`,[data.number])
-                    //   console.log("🚀 ~ file: statusShipping.services.ts:42 ~ result.data.map ~ result:", result[0])
                       
                       const [ordersCarrier]: any = await pool.query(
                         `UPDATE ${DB_PREFIX}order_carrier AS oc
