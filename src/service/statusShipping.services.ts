@@ -24,17 +24,6 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
               
                 if (data.status === "CREATED") {
                     const stateId = 2
-                    // const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
-                    // if (!orders) return { error: { message: "token not fount" } }
-                    
-                    // const [getorders]: any = await pool.query(`select id_order from ${DB_PREFIX}orders where reference = ?`,[data.number]);
-                    // if (!getorders) return { error: { message: "getorders not fount" } }
-                    // console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders[0].id_order)
-                    // console.log("🚀 ~ file: statusShipping.services.ts:29 ~ result.data.map ~ data.number:", data.number)
-                    
-                    
-                    // const [ordersCarrier]: any = await pool.query(`UPDATE ${DB_PREFIX}order_carrier SET tracking_number = ?  WHERE id_order = ?`, [data.tracking,getorders[0].id_order]);
-                    // if (!ordersCarrier) return { error: { message: "token not fount" } }
 
                     const [orders]: any = await pool.query(
                         `UPDATE ${DB_PREFIX}orders 
@@ -43,7 +32,14 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                         [stateId, data.number]
                       );
                       if (!orders) return { error: { message: "token not found" } }
-                      console.log("🚀 ~ file: statusShipping.services.ts:46 ~ result.data.map ~ orders:", orders)
+
+                    //   const [result]:any = await pool.query(`
+                    //   SELECT *
+                    //   FROM ${DB_PREFIX}order_carrier AS oc
+                    //   INNER JOIN ${DB_PREFIX}orders AS o
+                    //   ON oc.id_order = o.id_order
+                    //   WHERE o.reference = ?`,[data.number])
+                    //   console.log("🚀 ~ file: statusShipping.services.ts:42 ~ result.data.map ~ result:", result[0])
                       
                       const [ordersCarrier]: any = await pool.query(
                         `UPDATE ${DB_PREFIX}order_carrier AS oc
@@ -53,9 +49,6 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                         WHERE o.reference = ?`,
                         [data.tracking, data.number]
                         );
-                      console.log("🚀 ~ file: statusShipping.services.ts:55 ~ result.data.map ~ data.number:", data.number)
-                      console.log("🚀 ~ file: statusShipping.services.ts:55 ~ result.data.map ~ data.tracking:", data.tracking)
-                      console.log("🚀 ~ file: statusShipping.services.ts:56 ~ result.data.map ~ ordersCarrier:", ordersCarrier)
                       if (!ordersCarrier) return { error: { message: "token not found" } }
         
                 }
