@@ -29,7 +29,7 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                     
                     const [getorders]: any = await pool.query(`select id_order from ${DB_PREFIX}orders where reference = ?`,[data.number]);
                     if (!getorders) return { error: { message: "getorders not fount" } }
-                    console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders)
+                    console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders[0].id_order)
                     console.log("🚀 ~ file: statusShipping.services.ts:29 ~ result.data.map ~ data.number:", data.number)
                     
                     
