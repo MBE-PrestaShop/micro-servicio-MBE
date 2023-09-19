@@ -15,48 +15,48 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
         const referencias = orders.map((item: any) => item.reference);
        
 
-        processorProvider.statusOrders({
-            token: tokenMBE[0].token_shipping,
-            action: 'orderstatusext',
-            numbers: referencias
-        }).then((result) => {
-            result.data.map(async (data: any) => {
+        // processorProvider.statusOrders({
+        //     token: tokenMBE[0].token_shipping,
+        //     action: 'orderstatusext',
+        //     numbers: referencias
+        // }).then((result) => {
+        //     result.data.map(async (data: any) => {
               
-                if (data.status === "CREATED") {
-                    const stateId = 2
-                    const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
-                    if (!orders) return { error: { message: "token not fount" } }
+        //         if (data.status === "CREATED") {
+        //             const stateId = 2
+        //             const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
+        //             if (!orders) return { error: { message: "token not fount" } }
                    
-                    const [getorders]: any = await pool.query(`select * from ${DB_PREFIX}orders where reference = ?`,[data.number]);
-                    if (!getorders) return { error: { message: "getorders not fount" } }
-                    console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders)
+        //             const [getorders]: any = await pool.query(`select * from ${DB_PREFIX}orders where reference = ?`,[data.number]);
+        //             if (!getorders) return { error: { message: "getorders not fount" } }
+        //             console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders)
                     
                     
-                    const [ordersCarrier]: any = await pool.query(`UPDATE ${DB_PREFIX}order_carrier SET tracking_number = ?  WHERE id_order = ?`, [data.tracking,getorders[0].id_order]);
-                    if (!ordersCarrier) return { error: { message: "token not fount" } }
+        //             const [ordersCarrier]: any = await pool.query(`UPDATE ${DB_PREFIX}order_carrier SET tracking_number = ?  WHERE id_order = ?`, [data.tracking,getorders[0].id_order]);
+        //             if (!ordersCarrier) return { error: { message: "token not fount" } }
         
-                }
+        //         }
 
-                if (data.status === "TRANSIT") {
-                    const stateId = 4
-                    const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
-                    if (!orders) return { error: { message: "token not fount" } }
-                }
+        //         if (data.status === "TRANSIT") {
+        //             const stateId = 4
+        //             const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
+        //             if (!orders) return { error: { message: "token not fount" } }
+        //         }
 
-                if (data.status === "DELIVERED") {
-                    const stateId = 5
-                    const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
-                    if (!orders) return { error: { message: "token not fount" } }
-                }
+        //         if (data.status === "DELIVERED") {
+        //             const stateId = 5
+        //             const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
+        //             if (!orders) return { error: { message: "token not fount" } }
+        //         }
 
 
-            })
+        //     })
             
            
-        }).catch((error) => {
-            console.log("🚀 ~ file: orderStatus.controller.ts:49 ~ orderStatus ~ error:", error)
+        // }).catch((error) => {
+        //     console.log("🚀 ~ file: orderStatus.controller.ts:49 ~ orderStatus ~ error:", error)
 
-        })
+        // })
 
         return true;
     } catch (error) {
