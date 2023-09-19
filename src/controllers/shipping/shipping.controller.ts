@@ -52,7 +52,6 @@ export const shipping = async (request: IRequest, response: Response) => {
             console.log(result.data.error);
             if (result.data.error) return response.json({ error: { message: result.data.error } })
 
-           
             response.status(200).json({
                 createOrdern: true
             })
