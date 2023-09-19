@@ -26,6 +26,7 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                     const stateId = 2
                     const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
                     if (!orders) return { error: { message: "token not fount" } }
+                    console.log("🚀 ~ file: statusShipping.services.ts:29 ~ result.data.map ~ data.number:", data.number)
                    
                     const [getorders]: any = await pool.query(`select * from ${DB_PREFIX}orders where reference = ?`,[data.number]);
                     if (!getorders) return { error: { message: "getorders not fount" } }
