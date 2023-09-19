@@ -52,7 +52,9 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                         SET oc.tracking_number = ?
                         WHERE o.reference = ?`,
                         [data.tracking, data.number]
-                      );
+                        );
+                      console.log("🚀 ~ file: statusShipping.services.ts:55 ~ result.data.map ~ data.number:", data.number)
+                      console.log("🚀 ~ file: statusShipping.services.ts:55 ~ result.data.map ~ data.tracking:", data.tracking)
                       console.log("🚀 ~ file: statusShipping.services.ts:56 ~ result.data.map ~ ordersCarrier:", ordersCarrier)
                       if (!ordersCarrier) return { error: { message: "token not found" } }
         
