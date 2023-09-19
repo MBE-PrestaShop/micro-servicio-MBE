@@ -26,11 +26,11 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
                     const stateId = 2
                     const [orders]: any = await pool.query(`UPDATE ${DB_PREFIX}orders SET current_state = ?  WHERE reference = ?`, [stateId, data.number]);
                     if (!orders) return { error: { message: "token not fount" } }
-                    console.log("🚀 ~ file: statusShipping.services.ts:29 ~ result.data.map ~ data.number:", data.number)
-                   
+                    
                     const [getorders]: any = await pool.query(`select * from ${DB_PREFIX}orders where reference = ?`,[data.number]);
                     if (!getorders) return { error: { message: "getorders not fount" } }
                     console.log("🚀 ~ file: statusShipping.services.ts:32 ~ result.data.map ~ getorders:", getorders)
+                    console.log("🚀 ~ file: statusShipping.services.ts:29 ~ result.data.map ~ data.number:", data.number)
                     
                     
                     const [ordersCarrier]: any = await pool.query(`UPDATE ${DB_PREFIX}order_carrier SET tracking_number = ?  WHERE id_order = ?`, [data.tracking,getorders[0].id_order]);
