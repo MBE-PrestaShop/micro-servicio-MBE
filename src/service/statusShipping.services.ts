@@ -8,6 +8,7 @@ export const statusService = async (DB_PREFIX:any,pool:any) => {
     
         const [tokenMBE]: any = await pool.query(`select * from ${DB_PREFIX}mbe_shipping_token`);
         if (!tokenMBE) return { error: { message: "token not fount" } }
+        console.log("🚀 ~ file: statusShipping.services.ts:11 ~ statusService ~ tokenMBE:", tokenMBE)
 
         const [orders]: any = await pool.query(`select * from ${DB_PREFIX}orders`);
         if (!orders) return { error: { message: "orders not fount" } }
